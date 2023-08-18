@@ -1,4 +1,6 @@
-## Prerequisites for the workshop:
+# Prior to the Workshop:
+#### (Preferably do before the workshop)
+
 1. Fork this project to your Github Repo
 2. Create a Token with the following permission.. Keep this token handy..
 repo (all)
