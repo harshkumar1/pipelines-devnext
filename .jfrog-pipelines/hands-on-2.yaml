@@ -1,7 +1,7 @@
 valuesFilePath: ./values.yaml
 
 pipelines:
-  - name: c_pre_post_run_{{ .Values.var.project }}
+  - name: b_pre_post_run_{{ .Values.var.project }}
     preRun:
       execution:
         onExecute:
