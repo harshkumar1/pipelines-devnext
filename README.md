@@ -34,5 +34,29 @@ This steps is primairly to specify which repo has the YAML for the Pipelines whi
 ## Let the fun begin (Hands-On)
 
 #### Hands-On 1 : Create a Pipeline to do Mvn Build + Docker Build & Publish
+
+--> Step-1
+Update values.yaml
+var:
+  project: <<project which you working on.. no hyphen ("-") use underscore instead "_" in project name>>
+  gitProvider: <<integration name you created>>
+  path: <<your Github Username>>/pipelines-devnext
+  jfrogPlatformInstance: <<devnextsaas1.jfrog.io or devnextsaas2.jfrog.io>>
+
+--> Step-2
+Update mvn step command to ```clean install``` 
+
+--> Step-3
+Validate
+
+--> Step-4
+Save
+
+--> Step-5
+Navigate to pipeline a_java_devnext_workshop_1 pipeline
+
+
 #### Hands-On 2 : Print messages onComplete() & preRun & trigger pipeline
 
+--> Step-1
+add echo statements
