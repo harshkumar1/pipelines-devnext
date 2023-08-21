@@ -33,12 +33,6 @@ This steps is primairly to specify which repo has the YAML for the Pipelines whi
 
 ## Let the fun begin (Hands-On)
 
-#### Hands-On 1 : Add a Git Repo Resource to the Pipeline
+#### Hands-On 1 : Create a Pipeline to do Mvn Build + Docker Build & Publish
+#### Hands-On 2 : Print messages onComplete() & preRun & trigger pipeline
 
-#### Hands-On 2a : Add a step + task to do one of the below
-
-#### Hands-On 2b [Bonus]: Run steps in Parallel
-
-#### Hands-On 3 : Add a notification task on completion of Pipeline --> Slack Notify task at postRun()
-
-#### Hands-On 4 : Trigger a Custom Run to perform deployment
