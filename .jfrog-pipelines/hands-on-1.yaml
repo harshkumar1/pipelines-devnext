@@ -16,13 +16,13 @@ pipelines:
           outputResources:
             - name: mvn_build_info_{{ .Values.var.project }}
           affinityGroup: affinity_grp
-          mvnCommand: test
+          mvnCommand: test ## Change this to clean install
           forceXrayScan: false
           failOnScan: false
           autoPublishBuildInfo: true
         execution:
           onComplete:
-            - save_tests $res_{{ .Values.var.gitRepoResource }}_resourcePath/target/surefire-reports/
+            - save_tests $res_src_repo_{{ .Values.var.project }}_resourcePath/target/surefire-reports/
       
       - name: docker_build
         type: DockerBuild
