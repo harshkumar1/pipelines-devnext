@@ -11,6 +11,18 @@ resources:
   - name: mvn_build_info_{{ .Values.var.project }}
     type: BuildInfo
     configuration:
-      sourceArtifactory: artifactory #{{ .jfrog-pipelines.localArtifactory }}
+      sourceArtifactory: artifactory
+      buildName: devnext-java-hands-on-{{ .Values.var.project }}
+      buildNumber: ${run_number}
+  # - name: docker_build_info_{{ .Values.var.project }}
+  #   type: BuildInfo
+  #   configuration:
+  #     sourceArtifactory: artifactory
+  #     buildName: devnext-java-hands-on-{{ .Values.var.project }}
+  #     buildNumber: ${run_number}
+  - name: docker_publish_info_{{ .Values.var.project }}
+    type: BuildInfo
+    configuration:
+      sourceArtifactory: artifactory
       buildName: devnext-java-hands-on-{{ .Values.var.project }}
       buildNumber: ${run_number}

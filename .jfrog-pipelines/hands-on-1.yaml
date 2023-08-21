@@ -15,23 +15,43 @@ pipelines:
             - name: src_repo_{{ .Values.var.project }}
           outputResources:
             - name: mvn_build_info_{{ .Values.var.project }}
+          affinityGroup: affinity_grp
           mvnCommand: test
           forceXrayScan: false
           failOnScan: false
           autoPublishBuildInfo: true
         execution:
-          onSuccess:
-            - curl -fL https://install-cli.jfrog.io | sh
-            - jf --version
-            - task: jfrog/docker-build@v0.0.1
-              input:
-                resourceName: src_repo_{{ .Values.var.project }}
-                dockerImage: "{{ .Values.var.jfrogPlatformInstance }}/cpe-docker-local-devnext/b_java_{{ .Values.var.project }}:${run_number}"
-                dockerFileName: Dockerfile
-            - task: jfrog/docker-push@v0.0.2
-              input:
-                dockerImage: "{{ .Values.var.jfrogPlatformInstance }}/cpe-docker-local-devnext/b_java_{{ .Values.var.project }}:${run_number}"
-                xrayScan: "false"
-                failOnScan: "false"
           onComplete:
             - save_tests $res_{{ .Values.var.gitRepoResource }}_resourcePath/target/surefire-reports/
+      
+      - name: docker_build
+        type: DockerBuild
+        configuration:
+          inputResources:
+            - name: src_repo_{{ .Values.var.project }}
+            - name: mvn_build_info_{{ .Values.var.project }}
+          affinityGroup: affinity_grp
+          integrations:
+            - name: artifactory 
+          dockerFileLocation: .
+          dockerFileName: Dockerfile
+          dockerImageName: "{{ .Values.var.jfrogPlatformInstance }}/cpe-docker-local-devnext/b_java_{{ .Values.var.project }}"
+          dockerImageTag: ${run_number}
+          #outputResources:
+          #  - name: docker_build_info__{{ .Values.var.project }}
+      
+      - name: docker_publish
+        type: DockerPush
+        configuration:
+          inputResources:
+            - name: src_repo_{{ .Values.var.project }}
+            - name: affinity_grp
+          integrations:
+            - name: artifactory
+          affinityGroup: java_mvn_docker
+          targetRepository: cpe-docker-local-devnext
+          forceXrayScan: false
+          failOnScan: false
+          autoPublishBuildInfo: true
+          outputResources:
+            - name: docker_publish_info_{{ .Values.var.project }}
