@@ -45,10 +45,10 @@ pipelines:
         configuration:
           inputResources:
             - name: src_repo_{{ .Values.var.project }}
-            - name: affinity_grp
+            # - name: docker_build_info__{{ .Values.var.project }}
           integrations:
             - name: artifactory
-          affinityGroup: java_mvn_docker
+          affinityGroup: affinity_grp
           targetRepository: cpe-docker-local-devnext
           forceXrayScan: false
           failOnScan: false
