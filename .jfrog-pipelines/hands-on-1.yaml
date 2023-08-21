@@ -38,14 +38,14 @@ pipelines:
           dockerImageName: "{{ .Values.var.jfrogPlatformInstance }}/cpe-docker-local-devnext/b_java_{{ .Values.var.project }}"
           dockerImageTag: ${run_number}
           outputResources:
-           - name: docker_build_info__{{ .Values.var.project }}
+           - name: docker_build_info_{{ .Values.var.project }}
       
       - name: docker_publish
         type: DockerPush
         configuration:
           inputResources:
             - name: src_repo_{{ .Values.var.project }}
-            - name: docker_build_info__{{ .Values.var.project }}
+            - name: docker_build_info_{{ .Values.var.project }}
           integrations:
             - name: artifactory
           affinityGroup: affinity_grp
