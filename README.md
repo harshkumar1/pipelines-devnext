@@ -1,4 +1,6 @@
-## Pre-Requistes:
+# Prior to the Workshop:
+#### (Preferably do before the workshop)
+
 1. Fork this project to your Github Repo
 2. Create a Token with the following permission.. Keep this token handy..
 repo (all)
@@ -6,7 +8,8 @@ admin:repo_hook (read, write)
 admin:public_key (read, write)
 3. Join us on 22-Aug for session
 
-## Integrations
+# On the Day of Workshop 
+## Create Integrations
 JFrog Pipelines has a concept of Integrations. Integrations allows us to integrate with 2p / 3p tools like AWS, k8s, Github
 
 #### Configure SCM in JFrog Pipeline
@@ -23,12 +26,12 @@ Given that its Alpha, each participant will have to enable it.
 2. F12 (Developer Tools) > Console > ```localStorage.setItem('PDE', true)```
 3. Close the Developer Tools
 
-## Pipeline Source
+## Create Pipeline Source
 This steps is primairly to specify which repo has the YAML for the Pipelines which is being built.
 1. Login to JFrog Platform
 2. Admin > Pipeline > Integration > Add Integration
 
-## Hands-On
+## Let the fun begin (Hands-On)
 
 #### Hands-On 1 : Add a Git Repo Resource to the Pipeline
 
