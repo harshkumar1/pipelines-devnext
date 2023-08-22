@@ -1,7 +1,7 @@
 valuesFilePath: ./values.yaml
 
 pipelines:
-  - name: b_java_{{ .Values.var.project }}
+  - name: a_java_{{ .Values.var.project }}
     configuration:
       nodePool: default-dynamic-nodepool
       jfrogCliVersion: 2
@@ -15,23 +15,43 @@ pipelines:
             - name: src_repo_{{ .Values.var.project }}
           outputResources:
             - name: mvn_build_info_{{ .Values.var.project }}
-          mvnCommand: test
+          affinityGroup: affinity_grp
+          mvnCommand: test ## Change this to clean install
           forceXrayScan: false
           failOnScan: false
           autoPublishBuildInfo: true
         execution:
-          onSuccess:
-            - curl -fL https://install-cli.jfrog.io | sh
-            - jf --version
-            - task: jfrog/docker-build@v0.0.1
-              input:
-                resourceName: src_repo_{{ .Values.var.project }}
-                dockerImage: "{{ .Values.var.jfrogPlatformInstance }}/cpe-docker-local-devnext/b_java_{{ .Values.var.project }}:${run_number}"
-                dockerFileName: Dockerfile
-            - task: jfrog/docker-push@v0.0.2
-              input:
-                dockerImage: "{{ .Values.var.jfrogPlatformInstance }}/cpe-docker-local-devnext/b_java_{{ .Values.var.project }}:${run_number}"
-                xrayScan: "false"
-                failOnScan: "false"
           onComplete:
-            - save_tests $res_{{ .Values.var.gitRepoResource }}_resourcePath/target/surefire-reports/
+            - save_tests $res_src_repo_{{ .Values.var.project }}_resourcePath/target/surefire-reports/
+      
+      - name: docker_build
+        type: DockerBuild
+        configuration:
+          inputResources:
+            - name: src_repo_{{ .Values.var.project }}
+            - name: mvn_build_info_{{ .Values.var.project }}
+          affinityGroup: affinity_grp
+          integrations:
+            - name: artifactory 
+          dockerFileLocation: .
+          dockerFileName: Dockerfile
+          dockerImageName: "{{ .Values.var.jfrogPlatformInstance }}/cpe-docker-local-devnext/b_java_{{ .Values.var.project }}"
+          dockerImageTag: ${run_number}
+          outputResources:
+           - name: docker_build_info_{{ .Values.var.project }}
+      
+      - name: docker_publish
+        type: DockerPush
+        configuration:
+          inputResources:
+            - name: src_repo_{{ .Values.var.project }}
+            - name: docker_build_info_{{ .Values.var.project }}
+          integrations:
+            - name: artifactory
+          affinityGroup: affinity_grp
+          targetRepository: cpe-docker-local-devnext
+          forceXrayScan: false
+          failOnScan: false
+          autoPublishBuildInfo: true
+          outputResources:
+            - name: docker_publish_info_{{ .Values.var.project }}

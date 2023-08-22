@@ -1,5 +1,5 @@
 var:
-  project: devnext_workshop_1
-  gitProvider: hk_github
-  path: harshkumar1/pipelines-devnext
-  jfrogPlatformInstance: devnextsaas1.jfrog.io
+  project: devnext_workshop_1 # update this to <<project which you working on... no hyphen ("-") use underscore instead "_" in project name>>
+  gitProvider: hk_github # update this to <<integration name you created>>
+  path: harshkumar1/pipelines-devnext # update this to <<your Github Username>>/pipelines-devnext
+  jfrogPlatformInstance: devnextsaas1.jfrog.io # update this to devnextsaas1.jfrog.io or devnextsaas1.jfrog.io
