@@ -16,7 +16,7 @@ pipelines:
           outputResources:
             - name: mvn_build_info_{{ .Values.var.project }}
           affinityGroup: affinity_grp
-          mvnCommand: test ## Change this to clean install
+          mvnCommand: clean install ## Change this to clean install
           forceXrayScan: false
           failOnScan: false
           autoPublishBuildInfo: true
